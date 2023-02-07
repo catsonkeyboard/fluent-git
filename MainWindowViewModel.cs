@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using Dragablz;
 using FluentGit.Pages.MainContent;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Navigation;
@@ -15,37 +16,44 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private string _applicationTitle;
 
-    [ObservableProperty]
-    private ICollection<object> _menuItems;
+    public IInterTabClient InterTabClient => new InterTabClient();
 
     [ObservableProperty]
-    private ICollection<object> _footerMenuItems = new ObservableCollection<object>();
+    private ObservableCollection<HeaderedItemViewModel> _items;
+
+    public Func<HeaderedItemViewModel> Factory
+    {
+        get
+        {
+            return
+                () =>
+                {
+                    var dateTime = DateTime.Now;
+                    return new HeaderedItemViewModel()
+                    {
+                        Header = new HeaderWithCloseViewModel() { Header = dateTime.ToLongTimeString() },
+                        Content = dateTime.ToString("R")
+                    };
+                };
+        }
+    }
 
     public MainWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _applicationTitle = "FluentGit";
-        
-        _menuItems = new ObservableCollection<object>
+        Items = new ObservableCollection<HeaderedItemViewModel>();
+        Items.Add(new HeaderedItemViewModel 
+        { 
+            Header = "HOME", 
+            Content = "There is a TabablzControl.ShowDefault close button, but this demo illustrates how you can have close buttons on and off per tab, in the same TabablzControl." });
+        Items.Add(new HeaderedItemViewModel
         {
-            //new NavigationViewItem("航班动态", SymbolRegular.WindowApps24, typeof(MainContentView)),
-            //new NavigationViewItemSeparator(),
-            //new NavigationViewItem {Content = "基础信息管理", Icon = new SymbolIcon { Symbol = SymbolRegular.CheckboxChecked24  }, MenuItems = new ObservableCollection<object>
-            //{
-            //    new NavigationViewItem { Content = "航司信息管理", TargetPageType = typeof(AirlineView) },
-            //    new NavigationViewItem { Content = "机场信息管理", TargetPageType = typeof(MainContentView) },
-            //}},
-        };
-
-        var toggleThemeNavigationViewItem = new NavigationViewItem
-        {
-            Content = "Toggle theme",
-            Icon = new SymbolIcon { Symbol = SymbolRegular.PaintBrush24 }
-        };
-        toggleThemeNavigationViewItem.Click += OnToggleThemeClicked;
-
-        _footerMenuItems.Add(toggleThemeNavigationViewItem);
-        _footerMenuItems.Add(new NavigationViewItem { Content = "Settings", Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 }, });
+            //Header = new HeaderWithCloseViewModel { Header = "Closable" },
+            //Content = "This tab is closeable."
+            Header = "jdksaghdfsg",
+            Content = "dfsdfs"
+        });
     }
     
     private void OnToggleThemeClicked(object sender, RoutedEventArgs e)

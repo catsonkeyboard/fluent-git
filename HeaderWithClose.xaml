@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="FluentGit.HeaderWithClose"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FluentGit"
+             xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type Thumb}" x:Key="InvisibleThumbStyle">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid Background="{TemplateBinding Background}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Grid>
+            <TextBlock Text="{Binding Header}" />
+            <!-- here we provide our own Thumb, which will be used to monitor dragging -->
+            <Thumb Style="{DynamicResource InvisibleThumbStyle}"
+                   dragablz:DragablzItem.IsCustomThumb="True" />
+        </Grid>
+        <Button ToolTip="Manually add a close button"
+                Command="dragablz:TabablzControl.CloseItemCommand"
+                Style="{StaticResource CloseItemCommandButtonStyle}" />
+    </StackPanel>
+</UserControl>

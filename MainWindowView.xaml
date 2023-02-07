@@ -20,96 +20,49 @@
         WindowStartupLocation="CenterScreen"
         xmlns:dragablz ="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d">
+    <ui:FluentWindow.Resources>
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type dragablz:HeaderedItemViewModel}">
+                <ContentControl Content="{Binding Content}" Margin="4 4 4 4" FontSize="14" />
+            </DataTemplate>
+            <!--<DataTemplate DataType="{x:Type local:HeaderWithCloseViewModel}">
+                <local:HeaderWithClose />
+            </DataTemplate>-->
+            <!--<Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
+                <Setter Property="AdjacentHeaderItemOffset" Value="-12" />
+                <Setter Property="ShowDefaultAddButton" Value="True" />
+                <Setter Property="ShowDefaultCloseButton" Value="True" />
+                <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="{x:Type common:TabContent}">
+                            <ContentPresenter Margin="4" Content="{Binding Content}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
+        </ResourceDictionary>
+    </ui:FluentWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--<ui:NavigationView
-            x:Name="NavigationView"
-            Grid.Row="1"
-            FooterMenuItemsSource="{Binding ViewModel.FooterMenuItems, Mode=OneWay}"
-            IsBackButtonVisible="Collapsed"
-            IsPaneToggleVisible="False"
-            MenuItemsSource="{Binding ViewModel.MenuItems, Mode=OneWay}"
-            PaneDisplayMode="Left"
-            SelectionChanged="OnNavigationSelectionChanged">
-            <ui:NavigationView.Header>
-                <ui:NavigationViewBreadcrumb
-                    Margin="42,32,0,0"
-                    FontSize="28"
-                    FontWeight="DemiBold" />
-            </ui:NavigationView.Header>
-            <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox
-                    Margin="8,8,8,16"
-                    IconPlacement="Right"
-                    PlaceholderEnabled="True"
-                    PlaceholderText="Search" />
-            </ui:NavigationView.AutoSuggestBox>
-            <ui:NavigationView.ContentOverlay>
-                <Grid>
-                    <ui:Snackbar x:Name="RootSnackbar" />
-                </Grid>
-            </ui:NavigationView.ContentOverlay>
-        </ui:NavigationView>-->
-        <!--<TreeView AllowDrop="True" ScrollViewer.CanContentScroll="False" Grid.Row="1">
-            <TreeViewItem Header="Branches"
-                          IsExpanded="True"
-                          IsSelected="True">
-                <TreeViewItem Header="master" />
-                <TreeViewItem Header="develop" />
-            </TreeViewItem>
-            <TreeViewItem Header="Remotes">
-                <TreeViewItem Header="Contractor contact info" />
-                <TreeViewItem Header="Home Remodel">
-                    <TreeViewItem Header="Paint Color Scheme" />
-                    <TreeViewItem Header="Flooring Woodgrain Type" />
-                    <TreeViewItem Header="Kitchen Cabinet Style" />
-                </TreeViewItem>
-            </TreeViewItem>
-        </TreeView>-->
+
         <Grid Grid.Row="1">
-            <!--<TabControl Margin="0,8,0,0">
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Margin="0,0,6,0" Symbol="XboxConsole24" />
-                            <TextBlock Text="Hello" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <TextBlock Margin="12" Text="World" />
-                    </Grid>
-                </TabItem>
-                <TabItem IsSelected="True">
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Margin="0,0,6,0" Symbol="StoreMicrosoft16" />
-                            <TextBlock Text="The cake" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid>
-                        <TextBlock Margin="12" Text="Is a lie." />
-                    </Grid>
-                </TabItem>
-            </TabControl>-->
-            <dragablz:TabablzControl Margin="8">
+            <dragablz:TabablzControl x:Name="TabablzControl"
+                                     Margin="8"
+                                     ItemsSource="{Binding ViewModel.Items}" 
+                                     ItemContainerStyle="{StaticResource DragableTabItemStyle}"
+                                     HeaderMemberPath="Header"
+                                     ShowDefaultAddButton="True" 
+                                     ShowDefaultCloseButton="True"
+                                     NewItemFactory="{Binding ViewModel.Factory}">
                 <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController />
+                    <dragablz:InterTabController InterTabClient="{Binding ViewModel.InterTabClient}" />
                 </dragablz:TabablzControl.InterTabController>
-                <TabItem Header="Tab No. 1" IsSelected="True">
-                    <TextBlock>Hello World</TextBlock>
-                </TabItem>
-                <TabItem Header="Tab No. 2">
-                    <TextBlock>We Have Tearable Tabs!</TextBlock>
-                </TabItem>
-                <TabItem Header="Tab No. 3">
-                <TextBlock>We Have Tearable Tabs!</TextBlock>
-                </TabItem>
             </dragablz:TabablzControl>
         </Grid>
-
 
         <ui:Dialog
             x:Name="RootDialog"

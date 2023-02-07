@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dragablz ="clr-namespace:Dragablz;assembly=Dragablz">
 
-    <Style TargetType="{x:Type dragablz:TabablzControl}">
+    <!--<Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
         <Setter Property="Foreground">
             <Setter.Value>
                 <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
@@ -66,7 +66,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type dragablz:DragablzItem}">
+    <Style TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}">
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Opacity="0.0" Color="{DynamicResource ControlFillColorDefault}" />
@@ -143,6 +143,66 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>-->
+    <Style x:Key="DragableTabItemStyle" TargetType="{x:Type dragablz:DragablzItem}">
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Opacity="0.0" Color="{DynamicResource ControlFillColorDefault}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="True" />
+        <!--<Setter Property="OverridesDefaultStyle" Value="True" />-->
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type dragablz:DragablzItem}">
+                    <Grid Name="templateRoot" SnapsToDevicePixels="True" Margin="0 1 0 -1">
+                        <Border x:Name="Border"
+                            MinWidth="180"
+                            MinHeight="36"
+                            Margin="0"
+                            Padding="6"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1,1,1,0"
+                            CornerRadius="4,4,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" />
+                                <Thumb Name="PART_Thumb" Grid.Column="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" Style="{StaticResource InvisibleThumbStyle}" />
+                                <Button Grid.Column="1" Style="{StaticResource CloseItemCommandButtonStyle}" Command="{x:Static dragablz:TabablzControl.CloseItemCommand}" CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Button.Visibility>
+                                        <MultiBinding Converter="{StaticResource ShowDefaultCloseButtonConverter}">
+                                            <Binding Path="ShowDefaultCloseButton" RelativeSource="{RelativeSource FindAncestor , AncestorType={x:Type dragablz:TabablzControl}}" />
+                                            <Binding Path="FixedHeaderCount" RelativeSource="{RelativeSource FindAncestor , AncestorType={x:Type dragablz:TabablzControl}}" />
+                                            <Binding Path="LogicalIndex" RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </Button.Visibility>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="dragablz:TabablzControl.IsWrappingTabItem" Value="True">
+                            <Setter TargetName="contentPresenter" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.Header}" Property="Content" />
+                        </Trigger>
+                        <Trigger Property="dragablz:DragablzItem.IsSelected" Value="True">
+                            <Setter Value="{StaticResource TabItem.Selected.Background}" TargetName="Border" Property="Background" />
+                            <Setter Value="{StaticResource TabItem.Selected.Background}" TargetName="Border" Property="dragablz:Trapezoid.LongBasePenBrush" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-
+    
 </ResourceDictionary>
