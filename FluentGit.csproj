@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\wpfui.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="Dragablz" Version="0.0.3.234" />
+    <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Setting" />
+    <Folder Include="Services\Git\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\wpfui.png" />
+  </ItemGroup>
+
+</Project>
