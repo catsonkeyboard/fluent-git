@@ -32,9 +32,7 @@ public partial class MainWindowViewModel : ObservableObject
                     var dateTime = DateTime.Now;
                     return new HeaderedItemViewModel()
                     {
-                        Header = new HeaderWithCloseViewModel() {
-                            Header = dateTime.ToLongTimeString()
-                        },
+                        Header = "New Repository",
                         Content = _serviceProvider.GetService<RepositoryInitView>()
                     };
                 };
@@ -49,11 +47,9 @@ public partial class MainWindowViewModel : ObservableObject
         Items.Add(new HeaderedItemViewModel 
         { 
             Header = "HOME", 
-            Content = "There is a TabablzControl.ShowDefault close button, but this demo illustrates how you can have close buttons on and off per tab, in the same TabablzControl." });
+            Content = "Home" });
         Items.Add(new HeaderedItemViewModel
         {
-            //Header = new HeaderWithCloseViewModel { Header = "Closable" },
-            //Content = "This tab is closeable."
             Header = "jdksaghdfsg",
             Content = "dfsdfs"
         });

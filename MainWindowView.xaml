@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:FluentGit"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-        Width="1450"
-        Height="752"
+        Width="1200"
+        Height="800"
         d:DataContext="{d:DesignInstance local:MainWindowView,
                                          IsDesignTimeCreatable=False}"
         d:DesignHeight="650"
@@ -28,19 +28,6 @@
             <!--<DataTemplate DataType="{x:Type local:HeaderWithCloseViewModel}">
                 <local:HeaderWithClose />
             </DataTemplate>-->
-            <!--<Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource {x:Type dragablz:TabablzControl}}">
-                <Setter Property="AdjacentHeaderItemOffset" Value="-12" />
-                <Setter Property="ShowDefaultAddButton" Value="True" />
-                <Setter Property="ShowDefaultCloseButton" Value="True" />
-                <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate DataType="{x:Type common:TabContent}">
-                            <ContentPresenter Margin="4" Content="{Binding Content}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
         </ResourceDictionary>
     </ui:FluentWindow.Resources>
     <Grid>
@@ -53,7 +40,7 @@
             <dragablz:TabablzControl x:Name="TabablzControl"
                                      Margin="8"
                                      ItemsSource="{Binding ViewModel.Items}" 
-                                     ItemContainerStyle="{StaticResource DragableTabItemStyle}"
+                                     ItemContainerStyle="{StaticResource WpfUIDragableTabItemStyle}"
                                      HeaderMemberPath="Header"
                                      ShowDefaultAddButton="True" 
                                      ShowDefaultCloseButton="True"

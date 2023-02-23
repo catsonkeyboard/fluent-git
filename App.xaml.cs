@@ -47,7 +47,7 @@ namespace FluentGit
                 services.AddScoped<IDialogService, DialogService>();
 
                 // singleton
-                //services.AddSingleton<GitService>();
+                services.AddSingleton<RepositoryAsync>();
 
                 //// Pages
                 services.AddTransient<RepositoryContentView>();
@@ -73,6 +73,7 @@ namespace FluentGit
         private async void OnStartup(object sender, StartupEventArgs e)
         {
             await _host.StartAsync();
+            Wpf.Ui.Appearance.Theme.Apply(Wpf.Ui.Appearance.ThemeType.Dark);
         }
 
         /// <summary>

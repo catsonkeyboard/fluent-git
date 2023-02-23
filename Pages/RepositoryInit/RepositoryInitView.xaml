@@ -5,12 +5,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FluentGit.Pages.RepositoryInit"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:converters="clr-namespace:FluentGit.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1400">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
-        <Border Margin="200 25 200 25" MinWidth="700" MaxWidth="800"
-            BorderBrush="Gray" 
-            BorderThickness="1">
+        <Border Margin="200 30 200 30" MinWidth="700" MaxWidth="800"
+                CornerRadius="5"
+                >
+            <Border.Background>
+                <SolidColorBrush Color="{DynamicResource SystemFillColorSolidNeutralBackground}" />
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect
+                    BlurRadius="30"
+                    Direction="0"
+                    Opacity="0.4"
+                    ShadowDepth="0"
+                    Color="#202020" />
+            </Border.Effect>
             <Grid Margin="50 25 50 25" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -39,12 +54,14 @@
                                 <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
                             <ui:Button Grid.Column="0"
+                                       Appearance="Primary"
                                        Height="40"
                                        Content="Open Repository"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Center" Margin="0 0 10 0"
                                        Command="{Binding ViewModel.OpenRepositoryCommand}"/>
                             <ui:Button Grid.Column="1" 
+                                       Appearance="Primary"
                                        Height="40"
                                        Width="Auto"
                                        Content="New Repository"
@@ -84,15 +101,15 @@
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" MinHeight="50">
                             <Label Content="Source URL" FontSize="15" VerticalAlignment="Center" Width="135"/>
-                            <ui:TextBox VerticalAlignment="Center" Width="200" />
+                            <ui:TextBox VerticalAlignment="Center" Text="{Binding ViewModel.NewRepositoryUrl}" Width="530" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" MinHeight="50">
                             <Label Content="Repository Name" FontSize="15" VerticalAlignment="Center" Width="135"/>
-                            <ui:TextBox VerticalAlignment="Center" Width="200" />
+                            <ui:TextBox VerticalAlignment="Center" Text="{Binding ViewModel.NewRepositoryName}" Width="530" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" MinHeight="50">
                             <Label Content="Destination Path" FontSize="15" VerticalAlignment="Center" Width="135"/>
-                            <ui:TextBox VerticalAlignment="Center" Width="200" />
+                            <ui:TextBox VerticalAlignment="Center" Text="{Binding ViewModel.NewRepositoryPath}" Width="475" />
                             <ui:Button Content="..." 
                                    VerticalContentAlignment="Center" 
                                    HorizontalContentAlignment="Center" 
@@ -101,13 +118,17 @@
                                    Command="{Binding ViewModel.ChooseDirectoryCommand}"
                                    />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" MinHeight="50" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" MinHeight="80" HorizontalAlignment="Right">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0 0 20 0" Visibility="{Binding ViewModel.ProgressBarVisible,Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <ProgressBar IsIndeterminate="True" HorizontalAlignment="Center" Width="450" />
+                                <TextBlock Text="Downloading..." TextAlignment="Center" />
+                            </StackPanel>
                             <ui:Button Content="Clone"
-                                   VerticalContentAlignment="Center" 
-                                   HorizontalContentAlignment="Center"
-                                   Width="70"
-                                   Command="{Binding ViewModel.CloneCommand}"
-                                   />
+                                       Appearance="Primary"
+                                       VerticalContentAlignment="Center" 
+                                       HorizontalContentAlignment="Center"
+                                       Width="70"
+                                       Command="{Binding ViewModel.CloneCommand}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

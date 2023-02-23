@@ -287,7 +287,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="DragableTabItemStyle" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}">
+    <Style x:Key="WpfUIDragableTabItemStyle" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource {x:Type dragablz:DragablzItem}}">
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Opacity="0.0" Color="{DynamicResource ControlFillColorDefault}" />
@@ -307,7 +307,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dragablz:DragablzItem}">
                     <Grid Name="templateRoot" SnapsToDevicePixels="True" Margin="0 1 0 -1">
-                        <Border x:Name="Border"
+                        <Border x:Name="TabItemBorder"
                             MinWidth="180"
                             MinHeight="36"
                             Margin="0"
@@ -321,9 +321,18 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ContentPresenter Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" />
+                                <ContentPresenter Name="contentPresenter" 
+                                                  Content="{TemplateBinding Content}" 
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                  Margin="{TemplateBinding Padding}" />
                                 <Thumb Name="PART_Thumb" Grid.Column="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" Style="{StaticResource InvisibleThumbStyle}" />
-                                <Button Grid.Column="1" Style="{StaticResource WpfUICloseItemCommandButtonStyle}" Command="{x:Static dragablz:TabablzControl.CloseItemCommand}" CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <Button Grid.Column="1" Style="{StaticResource WpfUICloseItemCommandButtonStyle}" 
+                                        Command="{x:Static dragablz:TabablzControl.CloseItemCommand}" 
+                                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                                     <Button.Visibility>
                                         <MultiBinding Converter="{StaticResource ShowDefaultCloseButtonConverter}">
                                             <Binding Path="ShowDefaultCloseButton" RelativeSource="{RelativeSource FindAncestor , AncestorType={x:Type dragablz:TabablzControl}}" />
@@ -340,7 +349,7 @@
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
                                         <DoubleAnimation
-                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetName="TabItemBorder"
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
                                             From="0.0"
                                             To="1.0"
@@ -354,7 +363,7 @@
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation
-                                            Storyboard.TargetName="Border"
+                                            Storyboard.TargetName="TabItemBorder"
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
                                             From="0.0"
                                             To="0.5"
@@ -371,10 +380,28 @@
                         <Trigger Property="dragablz:TabablzControl.IsWrappingTabItem" Value="True">
                             <Setter TargetName="contentPresenter" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.Header}" Property="Content" />
                         </Trigger>
-                        <!--<Trigger Property="dragablz:DragablzItem.IsSelected" Value="True">
-                            <Setter Value="{StaticResource TabItem.Selected.Background}" TargetName="Border" Property="Background" />
-                            <Setter Value="{StaticResource TabItem.Selected.Background}" TargetName="Border" Property="dragablz:Trapezoid.LongBasePenBrush" />
-                        </Trigger>-->
+                        <Trigger Property="dragablz:DragablzItem.IsSelected" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
+                                            To="1.0"
+                                            Duration="0:0:.16" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
+                                            To="0"
+                                            Duration="0:0:.16" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

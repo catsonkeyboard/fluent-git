@@ -9,11 +9,21 @@ namespace FluentGit.Services
 {
     public class GitService
     {
+        private String _localPath;
+        private String _remotePath;
+        private Repository _repo;
 
-        public String GitClone(String path)
+        public String Path
         {
-            return Repository.Clone("https://github.com/libgit2/libgit2sharp.git", path);
+            get
+            {
+                return _repo.Info.Path;
+            }
         }
 
+        public GitService(String localPath)
+        {
+            _repo = new Repository(localPath);
+        }
     }
 }
