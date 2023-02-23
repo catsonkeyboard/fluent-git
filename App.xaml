@@ -9,9 +9,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--主题样式-->
                 <ui:ThemesDictionary Theme="Dark" />
+                <!--控件-->
                 <ui:ControlsDictionary />
+                <!--Dragablz样式-->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/Generic.xaml" />
+                <!--自定义样式-->
                 <ResourceDictionary Source="/FluentGit;component/Styles/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

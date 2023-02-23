@@ -15,7 +15,9 @@ using System.Windows;
 using FluentGit.Services.Contracts;
 using Wpf.Ui.Services;
 using System.Windows.Threading;
-using FluentGit.Pages.MainContent;
+using FluentGit.Pages.RepositoryContent;
+using LibGit2Sharp;
+using FluentGit.Pages.RepositoryInit;
 
 namespace FluentGit
 {
@@ -44,9 +46,14 @@ namespace FluentGit
                 services.AddScoped<ISnackbarService, SnackbarService>();
                 services.AddScoped<IDialogService, DialogService>();
 
+                // singleton
+                //services.AddSingleton<GitService>();
+
                 //// Pages
-                services.AddTransient<MainContentView>();
-                services.AddTransient<MainContentViewModel>();
+                services.AddTransient<RepositoryContentView>();
+                services.AddTransient<RepositoryContentViewModel>();
+                services.AddTransient<RepositoryInitView>();
+                services.AddTransient<RepositoryInitViewModel>();
             }).Build();
 
         /// <summary>

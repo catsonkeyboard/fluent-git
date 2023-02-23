@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="FluentGit.Pages.RepositoryInit.RepositoryInitView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FluentGit.Pages.RepositoryInit"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1400">
+    <Grid>
+        <Border Margin="200 25 200 25" MinWidth="700" MaxWidth="800"
+            BorderBrush="Gray" 
+            BorderThickness="1">
+            <Grid Margin="50 25 50 25" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Content="FluentGit"
+                   FontSize="30"
+                   Height="80"
+                   VerticalContentAlignment="Center" 
+                   HorizontalContentAlignment="Center"
+                   VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Local Repositories" 
+                   HorizontalContentAlignment="Left" 
+                   VerticalContentAlignment="Center"
+                   FontSize="20" Margin="0 10 0 0">
+                        </Label>
+                        <Grid Margin="0 10 0 10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+                            <ui:Button Grid.Column="0"
+                                       Height="40"
+                                       Content="Open Repository"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center" Margin="0 0 10 0"
+                                       Command="{Binding ViewModel.OpenRepositoryCommand}"/>
+                            <ui:Button Grid.Column="1" 
+                                       Height="40"
+                                       Width="Auto"
+                                       Content="New Repository"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center" Margin="10 0 0 0"
+                                       Command="{Binding ViewModel.NewRepositoryCommand}"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Recent Repositories" 
+                HorizontalContentAlignment="Left" 
+                VerticalContentAlignment="Center"
+                FontSize="20">
+                    </Label>
+                    <ListView Grid.Row="1">
+                        <ListViewItem Content="C:\Code\Work\database"
+                                  FontSize="16"
+                                  VerticalAlignment="Center"
+                                  VerticalContentAlignment="Center" />
+                        <ListViewItem Content="C:\Code\Work\database" 
+                                  FontSize="16"
+                                  VerticalContentAlignment="Center" />
+                        <ListViewItem Content="C:\Code\Work\database" 
+                                  FontSize="16"
+                                  VerticalContentAlignment="Center" />
+                        <ListViewItem Content="View More..."
+                                  FontSize="16"
+                                  VerticalContentAlignment="Center" />
+                    </ListView>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" MinHeight="50">
+                            <Label Content="Source URL" FontSize="15" VerticalAlignment="Center" Width="135"/>
+                            <ui:TextBox VerticalAlignment="Center" Width="200" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" MinHeight="50">
+                            <Label Content="Repository Name" FontSize="15" VerticalAlignment="Center" Width="135"/>
+                            <ui:TextBox VerticalAlignment="Center" Width="200" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" MinHeight="50">
+                            <Label Content="Destination Path" FontSize="15" VerticalAlignment="Center" Width="135"/>
+                            <ui:TextBox VerticalAlignment="Center" Width="200" />
+                            <ui:Button Content="..." 
+                                   VerticalContentAlignment="Center" 
+                                   HorizontalContentAlignment="Center" 
+                                   Width="50"
+                                   Margin="10 0 0 0"
+                                   Command="{Binding ViewModel.ChooseDirectoryCommand}"
+                                   />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" MinHeight="50" HorizontalAlignment="Right">
+                            <ui:Button Content="Clone"
+                                   VerticalContentAlignment="Center" 
+                                   HorizontalContentAlignment="Center"
+                                   Width="70"
+                                   Command="{Binding ViewModel.CloneCommand}"
+                                   />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+
+</UserControl>

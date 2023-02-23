@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using Dragablz;
-using FluentGit.Pages.MainContent;
+using FluentGit.Pages.RepositoryContent;
+using FluentGit.Pages.RepositoryInit;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.Navigation;
 
@@ -31,8 +32,10 @@ public partial class MainWindowViewModel : ObservableObject
                     var dateTime = DateTime.Now;
                     return new HeaderedItemViewModel()
                     {
-                        Header = new HeaderWithCloseViewModel() { Header = dateTime.ToLongTimeString() },
-                        Content = dateTime.ToString("R")
+                        Header = new HeaderWithCloseViewModel() {
+                            Header = dateTime.ToLongTimeString()
+                        },
+                        Content = _serviceProvider.GetService<RepositoryInitView>()
                     };
                 };
         }

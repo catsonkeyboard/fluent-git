@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Setting" />
-    <Folder Include="Services\Git\" />
   </ItemGroup>
 
   <ItemGroup>

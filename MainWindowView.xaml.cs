@@ -1,4 +1,4 @@
-﻿using FluentGit.Pages.MainContent;
+﻿using FluentGit.Pages.RepositoryContent;
 using FluentGit.Services.Contracts;
 using System;
 using System.Collections.Generic;
