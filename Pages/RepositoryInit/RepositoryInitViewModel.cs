@@ -25,7 +25,7 @@ namespace FluentGit.Pages.RepositoryInit
         [ObservableProperty]
         private Boolean _progressBarVisible = false;
 
-        public RepositoryInitViewModel(IServiceProvider serviceProvider) 
+        public RepositoryInitViewModel(IServiceProvider serviceProvider,RepositoryInitView view) : base(view) 
         {
             _serviceProvider = serviceProvider;
         }
@@ -63,10 +63,10 @@ namespace FluentGit.Pages.RepositoryInit
             //            ProgressBarVisible = false;
             //        });
             //}
-            var view = _serviceProvider.GetService<RepositoryContentView>();
-            if(view != null)
+            var viewModel = _serviceProvider.GetService<RepositoryContentViewModel>();
+            if(viewModel != null)
             {
-                WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(view));
+                WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(viewModel));
             }
         }
     }

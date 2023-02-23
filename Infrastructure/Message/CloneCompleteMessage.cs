@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using FluentGit.Infrastructure.ViewBase;
+using FluentGit.Infrastructure.MVVM;
 
 namespace FluentGit.Infrastructure.Message
 {
-    public class CloneCompleteMessage : ValueChangedMessage<IView>
+    public class CloneCompleteMessage : ValueChangedMessage<BaseViewModel>
     {
-        public CloneCompleteMessage(IView value) : base(value)
+        public CloneCompleteMessage(BaseViewModel value) : base(value)
         {
 
         }

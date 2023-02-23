@@ -18,9 +18,9 @@ namespace FluentGit.Infrastructure.MVVM
         {
             WeakReferenceMessenger.Default.Register<CloneCompleteMessage>(this, (r, m) =>
             {
-                if(m.Value is IView view)
+                if(m.Value is BaseViewModel viewModel)
                 {
-                    Content = view;
+                    Content = viewModel.View;
                 }
             });
         }

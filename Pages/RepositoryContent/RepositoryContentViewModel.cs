@@ -11,7 +11,7 @@ public partial class RepositoryContentViewModel : BaseViewModel
     [ObservableProperty]
     private ICollection<CommitInfo> _commitInfos;
 
-    public RepositoryContentViewModel()
+    public RepositoryContentViewModel(RepositoryContentView view) : base(view)
     {
         CommitInfos = new ObservableCollection<CommitInfo>
         {

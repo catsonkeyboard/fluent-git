@@ -22,7 +22,7 @@ namespace FluentGit.Pages.RepositoryInit
     /// </summary>
     public partial class RepositoryInitView : BaseView
     {
-        public RepositoryInitView(RepositoryInitViewModel viewModel) : base(viewModel)
+        public RepositoryInitView()
         {
             InitializeComponent();
         }

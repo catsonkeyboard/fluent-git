@@ -10,14 +10,8 @@ using Wpf.Ui.Controls.Navigation;
 
 namespace FluentGit.Infrastructure.ViewBase
 {
-    public class BaseView : UserControl, IView, INavigableView<BaseViewModel>
+    public class BaseView : UserControl, IView
     {
-        public BaseViewModel ViewModel { get; }
-        public BaseView(BaseViewModel viewModel) 
-        {
-            viewModel.View = this;
-            ViewModel = viewModel;
-            DataContext = this;
-        }
+        public BaseViewModel ViewModel { get; set; }
     }
 }

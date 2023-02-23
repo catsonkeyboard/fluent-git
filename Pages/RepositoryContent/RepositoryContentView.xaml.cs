@@ -6,10 +6,8 @@ namespace FluentGit.Pages.RepositoryContent;
 
 public partial class RepositoryContentView : BaseView
 {
-    public RepositoryContentView(RepositoryContentViewModel viewModel) : base(viewModel)
+    public RepositoryContentView()
     {
         InitializeComponent();
     }
-
-
 }

@@ -31,12 +31,12 @@ public partial class MainWindowViewModel : ObservableObject
                 () =>
                 {
                     var dateTime = DateTime.Now;
-                    var viewModel = new CustomHeaderedItemViewModel()
+                    var contentViewModel = _serviceProvider.GetService<RepositoryInitViewModel>();
+                    return new CustomHeaderedItemViewModel()
                     {
                         Header = "New Repository",
-                        Content = _serviceProvider.GetService<RepositoryInitView>()
+                        Content = contentViewModel.View,
                     };
-                    return viewModel;
                 };
         }
     }
