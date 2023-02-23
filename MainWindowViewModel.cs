@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using Dragablz;
+using FluentGit.Infrastructure.MVVM;
 using FluentGit.Pages.RepositoryContent;
 using FluentGit.Pages.RepositoryInit;
 using Wpf.Ui.Controls;
@@ -30,11 +31,12 @@ public partial class MainWindowViewModel : ObservableObject
                 () =>
                 {
                     var dateTime = DateTime.Now;
-                    return new HeaderedItemViewModel()
+                    var viewModel = new CustomHeaderedItemViewModel()
                     {
                         Header = "New Repository",
                         Content = _serviceProvider.GetService<RepositoryInitView>()
                     };
+                    return viewModel;
                 };
         }
     }
@@ -44,7 +46,7 @@ public partial class MainWindowViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _applicationTitle = "FluentGit";
         Items = new ObservableCollection<HeaderedItemViewModel>();
-        Items.Add(new HeaderedItemViewModel 
+        Items.Add(new HeaderedItemViewModel
         { 
             Header = "HOME", 
             Content = "Home" });

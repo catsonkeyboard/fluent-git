@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentGit.Infrastructure.ViewBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +20,10 @@ namespace FluentGit.Pages.RepositoryInit
     /// <summary>
     /// RepositoryInitView.xaml 的交互逻辑
     /// </summary>
-    public partial class RepositoryInitView : INavigableView<RepositoryInitViewModel>
+    public partial class RepositoryInitView : BaseView
     {
-        public RepositoryInitViewModel ViewModel { get; }
-        public RepositoryInitView(RepositoryInitViewModel viewModel)
+        public RepositoryInitView(RepositoryInitViewModel viewModel) : base(viewModel)
         {
-            this.ViewModel = viewModel;
-            this.DataContext = this;
             InitializeComponent();
         }
     }

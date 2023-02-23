@@ -1,9 +1,15 @@
-﻿using FluentGit.Services;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using FluentGit.Infrastructure.Message;
+using FluentGit.Infrastructure.MVVM;
+using FluentGit.Pages.RepositoryContent;
+using FluentGit.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 
 namespace FluentGit.Pages.RepositoryInit
 {
-    public partial class RepositoryInitViewModel : ObservableObject
+    public partial class RepositoryInitViewModel : BaseViewModel
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -39,27 +45,29 @@ namespace FluentGit.Pages.RepositoryInit
         [RelayCommand]
         public void Clone()
         {
-            if(!String.IsNullOrEmpty(NewRepositoryUrl)
-                && !String.IsNullOrEmpty(NewRepositoryName) 
-                && !String.IsNullOrEmpty(NewRepositoryPath))
+            //if (String.IsNullOrEmpty(NewRepositoryUrl)
+            //    || String.IsNullOrEmpty(NewRepositoryName)
+            //    || String.IsNullOrEmpty(NewRepositoryPath)) return;
+            //ProgressBarVisible = true;
+            //var repositoryAsync = _serviceProvider.GetService<RepositoryAsync>();
+            //if (repositoryAsync != null)
+            //{
+            //    var cloneTask = repositoryAsync
+            //        .Clone(NewRepositoryUrl, NewRepositoryPath + "\\" + NewRepositoryName);
+            //    cloneTask
+            //        .GetAwaiter()
+            //        .OnCompleted(() =>
+            //        {
+            //            var gitService = new GitService(cloneTask.Result);
+            //            var path2 = gitService.Path;
+            //            ProgressBarVisible = false;
+            //        });
+            //}
+            var view = _serviceProvider.GetService<RepositoryContentView>();
+            if(view != null)
             {
-                ProgressBarVisible = true;
-                var repositoryAsync = _serviceProvider.GetService<RepositoryAsync>();
-                if(repositoryAsync != null)
-                {
-                    var cloneTask = repositoryAsync
-                        .Clone(NewRepositoryUrl, NewRepositoryPath + "\\" + NewRepositoryName);
-                    cloneTask
-                        .GetAwaiter()
-                        .OnCompleted(() =>
-                        {
-                            var gitService = new GitService(cloneTask.Result);
-                            var path2 = gitService.Path;
-                            ProgressBarVisible = false;
-                        });
-                }
+                WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(view));
             }
         }
-
     }
 }

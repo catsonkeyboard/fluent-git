@@ -28,8 +28,8 @@
                 <SolidColorBrush Color="{x:Static SystemColors.ActiveBorderColor}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Width" Value="20" />
-        <Setter Property="Height" Value="20" />
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
         <Setter Property="Margin" Value="4 0 2 0" />
         <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
         <Style.Triggers>

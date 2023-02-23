@@ -1,11 +1,12 @@
-﻿using FluentGit.Models;
+﻿using FluentGit.Infrastructure.MVVM;
+using FluentGit.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace FluentGit.Pages.RepositoryContent;
 
-public partial class RepositoryContentViewModel : ObservableObject
+public partial class RepositoryContentViewModel : BaseViewModel
 {
     [ObservableProperty]
     private ICollection<CommitInfo> _commitInfos;
