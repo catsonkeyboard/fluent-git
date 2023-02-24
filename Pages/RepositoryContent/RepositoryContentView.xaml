@@ -6,38 +6,57 @@
       xmlns:local="clr-namespace:FluentGit.Pages.RepositoryContent"
       xmlns:models="clr-namespace:FluentGit.Models"
       xmlns:viewBase="clr-namespace:FluentGit.Infrastructure.ViewBase"
+      xmlns:e="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:behaviours="clr-namespace:FluentGit.Behaviors"
       mc:Ignorable="d">
+    <viewBase:BaseView.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </viewBase:BaseView.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="250" />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <TreeView Grid.Column="0" AllowDrop="True" ScrollViewer.CanContentScroll="False">
-                <TreeViewItem
-                    Header="Work Documents"
-                    IsExpanded="True"
-                    IsSelected="True">
-                    <TreeViewItem Header="Feature Schedule" />
-                    <TreeViewItem Header="Overall Project Plan" />
+            <TreeView Grid.Column="0"
+                      AllowDrop="True"
+                      ScrollViewer.CanContentScroll="False">
+                <TreeViewItem Header="BRANCHES"
+                              ItemsSource="{Binding ViewModel.Locals}"
+                              IsExpanded="True">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:BranchInfo}">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
                 </TreeViewItem>
-                <TreeViewItem Header="Personal Documents">
-                    <TreeViewItem Header="Contractor contact info" />
-                    <TreeViewItem Header="Home Remodel">
-                        <TreeViewItem Header="Paint Color Scheme" />
-                        <TreeViewItem Header="Flooring Woodgrain Type" />
-                        <TreeViewItem Header="Kitchen Cabinet Style" />
-                    </TreeViewItem>
+                <TreeViewItem Header="REMOTES" ItemsSource="{Binding ViewModel.Remotes}" IsExpanded="False">
+                    <TreeViewItem.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type models:RemoteInfo}" ItemsSource="{Binding Branches}">
+                            <TextBlock Text="{Binding Name}" />
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type models:BranchInfo}">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </TreeViewItem.Resources>
                 </TreeViewItem>
+                <e:Interaction.Behaviors>
+                    <behaviours:TreeViewSelectedItemBehavior SelectedItem="{Binding ViewModel.SelectedItem, Mode=TwoWay}" />
+                </e:Interaction.Behaviors>
             </TreeView>
-
             <ListView Grid.Column="1"
                 ItemsSource="{Binding ViewModel.CommitInfos, Mode=TwoWay}"
-                SelectedIndex="2"
+                SelectedIndex="0"
                 SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:CommitInfo}">
+                        <!--<TextBlock Text="{Binding Message, Mode=OneWay}" 
+                                   TextAlignment="Left" 
+                                   TextWrapping="WrapWithOverflow"
+                                   Margin="15 0 0 0"
+                                   />-->
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -47,8 +66,8 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="8,4" Text="{Binding Message, Mode=OneWay}" />
-                            <!--<TextBlock Grid.Row="0" Grid.Column="1" Margin="8,4" Text="{Binding DateTime, Mode=OneWay}" />-->
+                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="8,4" Text="{Binding MessageShort, Mode=OneWay}" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="8,4" Text="{Binding Count, Mode=OneWay}" />
                             <TextBlock Grid.Row="1" Grid.Column="0" Margin="8,4" Text="{Binding Author, Mode=OneWay}" />
                             <TextBlock Grid.Row="1" Grid.Column="1" Margin="8,4" Text="{Binding DateTime, Mode=OneWay}" />
                         </Grid>

@@ -1,9 +1,7 @@
 ﻿using FluentGit.Infrastructure.MVVM;
 using FluentGit.Models;
 using FluentGit.Services;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace FluentGit.Pages.RepositoryContent;
 
@@ -12,42 +10,57 @@ public partial class RepositoryContentViewModel : BaseViewModel
     private GitService _gitService;
 
     [ObservableProperty]
+    private ICollection<BranchInfo> _locals;
+
+    [ObservableProperty]
+    private ICollection<RemoteInfo> _remotes;
+
+    [ObservableProperty]
+    private ICollection<TagInfo> _tags;
+
+    [ObservableProperty]
+    private ICollection<StashInfo> _stashes;
+
+    [ObservableProperty]
+    private ICollection<SubModuleInfo> _subModules;
+
+    [ObservableProperty]
     private ICollection<CommitInfo> _commitInfos;
+
+    [ObservableProperty]
+    private BranchInfo _currentBranchInfo;
+
+    object _selectedItem;
+
+    public object SelectedItem
+    {
+        get 
+        { 
+            return _selectedItem; 
+        }
+
+        set
+        {
+            SetProperty(_selectedItem, value, 
+                //change tree item callback
+                (newValue) => 
+                {
+                    if(newValue is BranchInfo)
+                    {
+                        CurrentBranchInfo = (BranchInfo)newValue;
+                        CommitInfos = _gitService.GetCommitInfos(CurrentBranchInfo.Branch);
+                    }
+                    //CommitInfos = 
+                }
+            );
+        }
+    }
 
     public RepositoryContentViewModel(RepositoryContentView view, GitService gitService) : base(view)
     {
         _gitService = gitService;
-        CommitInfos = new ObservableCollection<CommitInfo>
-        {
-            new()
-            {
-                Message = "bugfix:修复多次通知，修复集合中map匹配问题",
-                Author = "张三",
-                Branch = "main",
-                DateTime = DateTime.Now
-            },
-            new()
-            {
-                Message = "bugfix:修复多次通知，修复集合中map匹配问题",
-                Author = "李四",
-                Branch = "main",
-                DateTime = DateTime.Now
-            },
-            new CommitInfo
-            {
-                Message = "bugfix:修复多次通知，修复集合中map匹配问题",
-                Author = "王五",
-                Branch = "main",
-                DateTime = DateTime.Now
-            },
-            new CommitInfo
-            {
-                Message = "bugfix:修复多次通知，修复集合中map匹配问题",
-                Author = "张三",
-                Branch = "main",
-                DateTime = DateTime.Now
-            }
-        };
+        Locals = _gitService.GetLocalBranches();
+        Remotes = _gitService.GetRemoteBranches();
     }
 
 }

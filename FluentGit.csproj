@@ -17,6 +17,7 @@
     <PackageReference Include="Dragablz" Version="0.0.3.234" />
     <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="WPF-UI" Version="3.0.0-preview.1" />
   </ItemGroup>
 
