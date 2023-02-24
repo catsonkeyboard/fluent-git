@@ -21,11 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Setting" />
-    <Folder Include="Common\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\wpfui.png" />
   </ItemGroup>
 
