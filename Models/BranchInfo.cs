@@ -12,6 +12,8 @@ namespace FluentGit.Models
     {
         public String CanoicalName { get; set; }
 
+        public String FriendlyName { get; set; }
+
         public bool IsRemote { get; set; }
 
         public String RemoteName { get; set; }

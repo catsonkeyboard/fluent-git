@@ -49,27 +49,23 @@
             <ListView Grid.Column="1"
                 ItemsSource="{Binding ViewModel.CommitInfos, Mode=TwoWay}"
                 SelectedIndex="0"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SelectionMode="Single">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:CommitInfo}">
-                        <!--<TextBlock Text="{Binding Message, Mode=OneWay}" 
-                                   TextAlignment="Left" 
-                                   TextWrapping="WrapWithOverflow"
-                                   Margin="15 0 0 0"
-                                   />-->
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="4*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="0" Margin="8,4" Text="{Binding MessageShort, Mode=OneWay}" />
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="8,4" Text="{Binding Count, Mode=OneWay}" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 4 8 0" Text="{Binding Count, Mode=OneWay}" HorizontalAlignment="Right"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Margin="8,4" Text="{Binding Author, Mode=OneWay}" />
-                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="8,4" Text="{Binding DateTime, Mode=OneWay}" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="0 4 8 0" Text="{Binding DateTime, Mode=OneWay}" HorizontalAlignment="Right"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

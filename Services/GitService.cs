@@ -42,7 +42,9 @@ namespace FluentGit.Services
                 //                }).ToList();
                 return new BranchInfo
                 {
-                    Name = p.CanonicalName,
+                    Name = p.FriendlyName,
+                    CanoicalName = p.CanonicalName,
+                    FriendlyName = p.FriendlyName,
                     Branch = p
                 };
             }
@@ -63,7 +65,13 @@ namespace FluentGit.Services
                 RemoteInfo remoteInfo = new RemoteInfo();
                 remoteInfo.Name = remote.Name;
                 remoteInfo.Branches = _repo.Branches.Where(p => p.IsRemote && p.RemoteName.Equals(remote.Name))
-                    .Select(t => new BranchInfo { Name = t.CanonicalName }).ToList();
+                    .Select(t => new BranchInfo 
+                    { 
+                        Name = t.FriendlyName, 
+                        CanoicalName = t.CanonicalName,
+                        FriendlyName = t.FriendlyName 
+                    }
+                    ).ToList();
                 remoteInfos.Add(remoteInfo);
             }
             return remoteInfos;
