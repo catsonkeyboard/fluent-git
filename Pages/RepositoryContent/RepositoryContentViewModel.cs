@@ -9,11 +9,14 @@ namespace FluentGit.Pages.RepositoryContent;
 
 public partial class RepositoryContentViewModel : BaseViewModel
 {
+    private GitService _gitService;
+
     [ObservableProperty]
     private ICollection<CommitInfo> _commitInfos;
 
     public RepositoryContentViewModel(RepositoryContentView view, GitService gitService) : base(view)
     {
+        _gitService = gitService;
         CommitInfos = new ObservableCollection<CommitInfo>
         {
             new()

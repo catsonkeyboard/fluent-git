@@ -6,6 +6,7 @@ using FluentGit.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
+using System.IO;
 
 namespace FluentGit.Pages.RepositoryInit
 {
@@ -23,7 +24,7 @@ namespace FluentGit.Pages.RepositoryInit
         private String? _newRepositoryPath;
 
         [ObservableProperty]
-        private Boolean _progressBarVisible = false;
+        private bool _progressBarVisible = false;
 
         public RepositoryInitViewModel(IServiceProvider serviceProvider,RepositoryInitView view) : base(view) 
         {
@@ -39,6 +40,25 @@ namespace FluentGit.Pages.RepositoryInit
             if (ok == System.Windows.Forms.DialogResult.OK)
             {
                 NewRepositoryPath = dialog.SelectedPath;
+            }
+        }
+
+        [RelayCommand]
+        public void OpenRepository()
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var ok = dialog.ShowDialog();
+            if (ok == System.Windows.Forms.DialogResult.OK)
+            {
+                var path = dialog.SelectedPath;
+                var gitPath = Path.Combine(path, ".git");
+                var gitService = new GitService(gitPath);
+                var viewModelFunc = _serviceProvider.GetService<Func<GitService, RepositoryContentViewModel>>();
+                if (viewModelFunc != null)
+                {
+                    var viewModel = viewModelFunc.Invoke(gitService);
+                    WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(viewModel));
+                }
             }
         }
 
