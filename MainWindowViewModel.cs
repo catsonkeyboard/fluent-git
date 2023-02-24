@@ -21,7 +21,7 @@ public partial class MainWindowViewModel : ObservableObject
     public IInterTabClient InterTabClient => new InterTabClient();
 
     [ObservableProperty]
-    private ObservableCollection<HeaderedItemViewModel> _items;
+    private ObservableCollection<HeaderedItemViewModel> _items = new ObservableCollection<HeaderedItemViewModel>();
 
     public Func<HeaderedItemViewModel> Factory
     {
@@ -45,16 +45,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         _serviceProvider = serviceProvider;
         _applicationTitle = "FluentGit";
-        Items = new ObservableCollection<HeaderedItemViewModel>();
-        Items.Add(new HeaderedItemViewModel
-        { 
-            Header = "HOME", 
-            Content = "Home" });
-        Items.Add(new HeaderedItemViewModel
-        {
-            Header = "jdksaghdfsg",
-            Content = "dfsdfs"
-        });
+        Items.Add(Factory());
     }
     
     private void OnToggleThemeClicked(object sender, RoutedEventArgs e)

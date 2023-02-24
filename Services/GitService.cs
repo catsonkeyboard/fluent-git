@@ -1,13 +1,9 @@
 ﻿using LibGit2Sharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FluentGit.Services
 {
-    public class GitService
+    public class GitService : IDisposable
     {
         private String _localPath;
         private String _remotePath;
@@ -21,9 +17,16 @@ namespace FluentGit.Services
             }
         }
 
+        [ActivatorUtilitiesConstructor]
         public GitService(String localPath)
         {
+            _localPath = localPath;
             _repo = new Repository(localPath);
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }

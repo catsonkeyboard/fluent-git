@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FluentGit.Services
 {
-    public class RepositoryAsync
+    public class GitRepositoryAsync
     {
         public Task<String> Clone(string sourceUrl, string workdirPath)
         {

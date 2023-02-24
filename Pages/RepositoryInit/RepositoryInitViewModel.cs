@@ -45,28 +45,29 @@ namespace FluentGit.Pages.RepositoryInit
         [RelayCommand]
         public void Clone()
         {
-            //if (String.IsNullOrEmpty(NewRepositoryUrl)
-            //    || String.IsNullOrEmpty(NewRepositoryName)
-            //    || String.IsNullOrEmpty(NewRepositoryPath)) return;
-            //ProgressBarVisible = true;
-            //var repositoryAsync = _serviceProvider.GetService<RepositoryAsync>();
-            //if (repositoryAsync != null)
-            //{
-            //    var cloneTask = repositoryAsync
-            //        .Clone(NewRepositoryUrl, NewRepositoryPath + "\\" + NewRepositoryName);
-            //    cloneTask
-            //        .GetAwaiter()
-            //        .OnCompleted(() =>
-            //        {
-            //            var gitService = new GitService(cloneTask.Result);
-            //            var path2 = gitService.Path;
-            //            ProgressBarVisible = false;
-            //        });
-            //}
-            var viewModel = _serviceProvider.GetService<RepositoryContentViewModel>();
-            if(viewModel != null)
+            if (String.IsNullOrEmpty(NewRepositoryUrl)
+                || String.IsNullOrEmpty(NewRepositoryName)
+                || String.IsNullOrEmpty(NewRepositoryPath)) return;
+            ProgressBarVisible = true;
+            var repositoryAsync = _serviceProvider.GetService<GitRepositoryAsync>();
+            if (repositoryAsync != null)
             {
-                WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(viewModel));
+                var cloneTask = repositoryAsync
+                    .Clone(NewRepositoryUrl, NewRepositoryPath + "\\" + NewRepositoryName);
+                cloneTask
+                    .GetAwaiter()
+                    .OnCompleted(() =>
+                    {
+                        //clone complete
+                        var gitService = new GitService(cloneTask.Result);
+                        ProgressBarVisible = false;
+                        var viewModelFunc = _serviceProvider.GetService<Func<GitService, RepositoryContentViewModel>>();
+                        if (viewModelFunc != null)
+                        {
+                            var viewModel = viewModelFunc.Invoke(gitService);
+                            WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(viewModel));
+                        }
+                    });
             }
         }
     }

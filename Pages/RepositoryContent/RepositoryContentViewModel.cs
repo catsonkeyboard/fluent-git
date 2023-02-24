@@ -1,5 +1,6 @@
 ﻿using FluentGit.Infrastructure.MVVM;
 using FluentGit.Models;
+using FluentGit.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ public partial class RepositoryContentViewModel : BaseViewModel
     [ObservableProperty]
     private ICollection<CommitInfo> _commitInfos;
 
-    public RepositoryContentViewModel(RepositoryContentView view) : base(view)
+    public RepositoryContentViewModel(RepositoryContentView view, GitService gitService) : base(view)
     {
         CommitInfos = new ObservableCollection<CommitInfo>
         {

@@ -14,8 +14,7 @@
     </UserControl.Resources>
     <Grid>
         <Border Margin="200 30 200 30" MinWidth="700" MaxWidth="800"
-                CornerRadius="15"
-                >
+                CornerRadius="15">
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource SystemFillColorSolidNeutralBackground}" />
             </Border.Background>

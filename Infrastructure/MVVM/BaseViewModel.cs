@@ -1,5 +1,6 @@
 ﻿using Dragablz;
 using FluentGit.Infrastructure.ViewBase;
+using FluentGit.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

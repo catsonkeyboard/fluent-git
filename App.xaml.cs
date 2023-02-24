@@ -47,11 +47,19 @@ namespace FluentGit
                 services.AddScoped<IDialogService, DialogService>();
 
                 // singleton
-                services.AddSingleton<RepositoryAsync>();
+                services.AddSingleton<GitRepositoryAsync>();
 
                 //// Pages
+                // constructor having parameter whose value are determined at runtime
+                //services.AddTransient<Func<String, GitService>>(
+                //        provider => new Func<String,GitService>((gitPath) => new GitService(gitPath))
+                //);
                 services.AddTransient<RepositoryContentView>();
-                services.AddTransient<RepositoryContentViewModel>();
+                services.AddTransient<Func<GitService,RepositoryContentViewModel>>(
+                    provider => new Func<GitService, RepositoryContentViewModel>(
+                        (gitService) => new RepositoryContentViewModel(provider.GetRequiredService<RepositoryContentView>(), gitService)
+                    )
+                );
                 services.AddTransient<RepositoryInitView>();
                 services.AddTransient<RepositoryInitViewModel>();
             }).Build();
