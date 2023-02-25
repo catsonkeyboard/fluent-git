@@ -18,6 +18,8 @@ namespace FluentGit.Models
 
         public String RemoteName { get; set; }
 
+        public int CountToFetch { get; set; }
+
         public Branch Branch { get; set; }
 
         //public List<CommitInfo> CommitInfos { get; set; }

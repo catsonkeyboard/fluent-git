@@ -8,13 +8,51 @@
       xmlns:viewBase="clr-namespace:FluentGit.Infrastructure.ViewBase"
       xmlns:e="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviours="clr-namespace:FluentGit.Behaviors"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       mc:Ignorable="d">
     <viewBase:BaseView.Resources>
         <ResourceDictionary>
+            <DataTemplate DataType="{x:Type models:CommitDetailInfo}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Commit Hash" Width="300"/>
+                            <TextBlock Text="{Binding Hash}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+
+                    </Grid>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </viewBase:BaseView.Resources>
     <Grid>
-        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Menu >
+                <ui:MenuItem Header="Commit" Tag="new_file" SymbolIcon="AddCircle24"/>
+                <ui:MenuItem Header="Pull" Tag="Pull"  SymbolIcon="AddCircle24"/>
+                <ui:MenuItem Header="Push" Tag="Push"  SymbolIcon="AddCircle24"/>
+                <ui:MenuItem Header="Fetch" Tag="Fetch"  SymbolIcon="AddCircle24"/>
+                <Separator />
+                <ui:MenuItem Header="Branch" Tag="Branch"  SymbolIcon="AddCircle24"/>
+                <ui:MenuItem Header="Merge" Tag="Merge"  SymbolIcon="AddCircle24"/>
+                <Separator />
+                <ui:MenuItem Header="Stash" Tag="Stash"  SymbolIcon="AddCircle24"/>
+                <Separator />
+                <ui:MenuItem Header="Discard" Tag="Discard"  SymbolIcon="AddCircle24"/>
+                <ui:MenuItem Header="Tag" Tag="Tag"  SymbolIcon="AddCircle24"/>
+            </Menu>
+        </Grid>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition />
@@ -49,6 +87,7 @@
             <ListView Grid.Column="1"
                 ItemsSource="{Binding ViewModel.CommitInfos, Mode=TwoWay}"
                 SelectedIndex="0"
+                SelectedItem="{Binding ViewModel.SelectedCommitInfo}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SelectionMode="Single">
                 <ListView.ItemTemplate>
@@ -71,16 +110,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    
-                </Grid>
-                <Grid Grid.Row="1">
 
-                </Grid>
             </Grid>
         </Grid>
     </Grid>

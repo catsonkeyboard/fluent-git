@@ -30,6 +30,25 @@ public partial class RepositoryContentViewModel : BaseViewModel
     [ObservableProperty]
     private BranchInfo _currentBranchInfo;
 
+    [ObservableProperty]
+    private CommitDetailInfo _commitDetailInfo;
+
+    private CommitInfo _selectedCommitInfo;
+
+    public CommitInfo SelectedCommitInfo
+    {
+        get => _selectedCommitInfo;
+        set
+        {
+            SetProperty(_selectedCommitInfo, value, (newValue) => { 
+                if (newValue != null)
+                {
+                    CommitDetailInfo = _gitService.GetCommitDetailInfo(newValue.Commit);
+                }
+            });
+        }
+    }
+
     object _selectedItem;
 
     public object SelectedItem
