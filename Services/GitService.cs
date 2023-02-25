@@ -32,14 +32,6 @@ namespace FluentGit.Services
         {
             return _repo.Branches.Where(p => !p.IsRemote).Select(p =>
             {
-                //var commitList = p.Commits.AsEnumerable<Commit>().ToList()
-                //                .Select(p =>
-                //                new CommitInfo
-                //                {
-                //                    MessageShort = p.MessageShort?.Substring(0,20),
-                //                    DateTime = p.Author.When.DateTime,
-                //                    Author = p.Author.Name,
-                //                }).ToList();
                 return new BranchInfo
                 {
                     Name = p.FriendlyName,
@@ -95,9 +87,22 @@ namespace FluentGit.Services
                                     MessageShort = p.MessageShort,
                                     DateTime = p.Author.When.DateTime,
                                     Author = p.Author.Name,
-                                    Count = i
+                                    Count = i,
+                                    Commit = p
                                 };
                             }).ToList();
+        }
+
+        public CommitDetailInfo GetCommitDetailInfo(Commit commit)
+        {
+            return new CommitDetailInfo
+            {
+                Hash = commit.Sha,
+                Tree = commit.Tree.Sha,
+                Author = commit.Author.Name,
+                Date = commit.Author.When.DateTime,
+                Parent = commit.Parents.First()?.Sha
+            };
         }
 
         public ICollection<TagInfo> GetTags()

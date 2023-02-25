@@ -26,6 +26,8 @@ namespace FluentGit.Pages.RepositoryInit
         [ObservableProperty]
         private bool _progressBarVisible = false;
 
+        public event EventHandler<BaseViewModel> CloneCompleteEvent;
+
         public RepositoryInitViewModel(IServiceProvider serviceProvider,RepositoryInitView view) : base(view) 
         {
             _serviceProvider = serviceProvider;
@@ -57,7 +59,8 @@ namespace FluentGit.Pages.RepositoryInit
                 if (viewModelFunc != null)
                 {
                     var viewModel = viewModelFunc.Invoke(gitService);
-                    WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(viewModel));
+                    //WeakReferenceMessenger.Default.Send(new CloneCompleteMessage(viewModel));
+                    CloneCompleteEvent?.Invoke(this, viewModel);
                 }
             }
         }

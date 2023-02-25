@@ -70,7 +70,18 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    
+                </Grid>
+                <Grid Grid.Row="1">
 
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </viewBase:BaseView>

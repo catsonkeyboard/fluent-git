@@ -30,13 +30,8 @@ public partial class MainWindowViewModel : ObservableObject
             return
                 () =>
                 {
-                    var dateTime = DateTime.Now;
                     var contentViewModel = _serviceProvider.GetService<RepositoryInitViewModel>();
-                    return new CustomHeaderedItemViewModel()
-                    {
-                        Header = "New Repository",
-                        Content = contentViewModel.View,
-                    };
+                    return new CustomHeaderedItemViewModel("New Repository", contentViewModel.View);
                 };
         }
     }

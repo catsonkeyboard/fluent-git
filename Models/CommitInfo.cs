@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibGit2Sharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,5 +29,7 @@ namespace FluentGit.Models
 
         [ObservableProperty]
         private int _count;
+
+        public Commit Commit { get; set; }
     }
 }
