@@ -30,6 +30,9 @@ namespace FluentGit.Models
         [ObservableProperty]
         private int _count;
 
+        [ObservableProperty]
+        private List<ChangeInfo> _changeInfos;
+
         public Commit Commit { get; set; }
     }
 }

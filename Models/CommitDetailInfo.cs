@@ -26,5 +26,7 @@ namespace FluentGit.Models
 
         public String Message { get; set; }
 
+        public List<ChangeInfo> ChangeInfos { get; set; }
+
     }
 }

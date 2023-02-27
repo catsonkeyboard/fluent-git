@@ -109,8 +109,47 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Grid.Column="2">
-
+            <Grid Grid.Column="2" DataContext="{Binding ViewModel.CommitDetailInfo}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Vertical" Margin="10 10 10 10">
+                            <StackPanel Orientation="Horizontal"  Margin="5 5 5 5">
+                                <Label Content="Commit Hash" Width="120"/>
+                                <TextBlock Text="{Binding Hash}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Margin="5 5 5 5">
+                                <Label Content="Tree" Width="120"/>
+                                <TextBlock Text="{Binding Tree}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Margin="5 5 5 5">
+                                <Label Content="Author" Width="120"/>
+                                <TextBlock Text="{Binding Author}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Margin="5 5 5 5">
+                                <Label Content="Parent" Width="120"/>
+                                <TextBlock Text="{Binding Parent}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Margin="5 5 5 5">
+                                <TextBlock Text="{Binding Message}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding ChangeInfos}" Name="listView">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="{x:Type models:ChangeInfo}">
+                                    <Expander Header="{Binding Path}">
+                                        <TextBlock TextWrapping="Wrap" Text="111" />
+                                    </Expander>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

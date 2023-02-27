@@ -13,13 +13,7 @@ namespace FluentGit.Services
         private String _remotePath;
         private Repository _repo;
 
-        public String Path
-        {
-            get
-            {
-                return _repo.Info.Path;
-            }
-        }
+        public String Name { get; private set; }
 
         [ActivatorUtilitiesConstructor]
         public GitService(String localPath)
@@ -75,10 +69,17 @@ namespace FluentGit.Services
                             .Select(p => {
                                 var i = 0;
                                 var parents = p.Parents;
-                                foreach(var parent in parents)
+                                List<ChangeInfo> changes = new();
+                                foreach (var parent in parents)
                                 {
-                                    foreach (var change in _repo.Diff.Compare<TreeChanges>(parent.Tree, p.Tree))
+                                    foreach (TreeEntryChanges change in _repo.Diff.Compare<TreeChanges>(parent.Tree, p.Tree))
                                     {
+                                        ChangeInfo changeInfo = new ChangeInfo
+                                        {
+                                            ChangeKind = change.Status,
+                                            Path = change.Path,
+                                        };
+                                        changes.Add(changeInfo);
                                         i++;
                                     }
                                 }
@@ -88,20 +89,23 @@ namespace FluentGit.Services
                                     DateTime = p.Author.When.DateTime,
                                     Author = p.Author.Name,
                                     Count = i,
-                                    Commit = p
+                                    Commit = p,
+                                    ChangeInfos= changes
                                 };
                             }).ToList();
         }
 
-        public CommitDetailInfo GetCommitDetailInfo(Commit commit)
+        public CommitDetailInfo GetCommitDetailInfo(CommitInfo commit)
         {
             return new CommitDetailInfo
             {
-                Hash = commit.Sha,
-                Tree = commit.Tree.Sha,
-                Author = commit.Author.Name,
-                Date = commit.Author.When.DateTime,
-                Parent = commit.Parents.First()?.Sha
+                Hash = commit.Commit.Sha,
+                Tree = commit.Commit.Tree.Sha,
+                Author = commit.Commit.Author.Name,
+                Date = commit.Commit.Author.When.DateTime,
+                Parent = commit.Commit.Parents.First()?.Sha,
+                Message = commit.Commit.Message,
+                ChangeInfos = commit.ChangeInfos
             };
         }
 

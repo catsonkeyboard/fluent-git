@@ -15,6 +15,8 @@ namespace FluentGit.Infrastructure.MVVM
     {
         public IView View { get; set; }
 
+        public String Title { get; set; }
+
         public BaseViewModel(IView view)
         { 
             View = view;

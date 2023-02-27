@@ -43,7 +43,7 @@ public partial class RepositoryContentViewModel : BaseViewModel
             SetProperty(_selectedCommitInfo, value, (newValue) => { 
                 if (newValue != null)
                 {
-                    CommitDetailInfo = _gitService.GetCommitDetailInfo(newValue.Commit);
+                    CommitDetailInfo = _gitService.GetCommitDetailInfo(newValue);
                 }
             });
         }
