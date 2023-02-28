@@ -12,11 +12,14 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Border Margin="0" BorderThickness="0">
+        <Border.Background>
+            <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
+        </Border.Background>
         <Border Margin="200 30 200 30" MinWidth="700" MaxWidth="800"
                 CornerRadius="15">
             <Border.Background>
-                <SolidColorBrush Color="{DynamicResource SystemFillColorSolidNeutralBackground}" />
+                <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
             </Border.Background>
             <Border.Effect>
                 <DropShadowEffect
@@ -134,6 +137,6 @@
                 </Grid>
             </Grid>
         </Border>
-    </Grid>
+    </Border>
 
 </viewBase:BaseView>
