@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FluentGit"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:mvvm="clr-namespace:FluentGit.Infrastructure.MVVM"
         Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
         Width="1200"
         Height="800"
@@ -22,8 +23,8 @@
         mc:Ignorable="d">
     <ui:FluentWindow.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type dragablz:HeaderedItemViewModel}">
-                <ContentControl Content="{Binding Content}" Margin="4 4 4 4" FontSize="14" />
+            <DataTemplate DataType="{x:Type mvvm:CustomHeaderedItemViewModel}">
+                <ContentControl Content="{Binding Content}" Margin="0" FontSize="14" />
             </DataTemplate>
             <!--<DataTemplate DataType="{x:Type local:HeaderWithCloseViewModel}">
                 <local:HeaderWithClose />

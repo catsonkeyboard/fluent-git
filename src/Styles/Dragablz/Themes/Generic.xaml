@@ -395,9 +395,6 @@
                         </VisualStateManager.VisualStateGroups>-->
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!--<Trigger Property="dragablz:DragablzItem.IsSelected" Value="True">
-                            <Setter Property="Panel.ZIndex" Value="100" />
-                        </Trigger>-->
                         <Trigger Property="dragablz:TabablzControl.IsWrappingTabItem" Value="True">
                             <Setter TargetName="contentPresenter" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.Header}" Property="Content" />
                         </Trigger>
@@ -413,7 +410,7 @@
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
                             <Setter Property="Panel.ZIndex" Value="-1"/>
-                            <Setter TargetName="TabItemBorder" Property="Background" Value="{DynamicResource Brush.BG5}"/>
+                            <Setter TargetName="TabItemBorder" Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}"/>
                         </MultiTrigger>
                         <!--<Trigger Property="dragablz:DragablzItem.IsSelected" Value="True">
                             <Trigger.EnterActions>
