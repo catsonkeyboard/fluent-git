@@ -9,9 +9,19 @@
       xmlns:e="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:behaviours="clr-namespace:FluentGit.Behaviors"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d">
     <viewBase:BaseView.Resources>
         <ResourceDictionary>
+            <Style x:Key="Style.Icon" TargetType="{x:Type Path}">
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Stretch" Value="Uniform"/>
+                <Setter Property="Fill" Value="{DynamicResource Brush.FG}"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+            </Style>
             <DataTemplate DataType="{x:Type models:CommitDetailInfo}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -29,7 +39,64 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="decoratorsTemplate" DataType="{x:Type models:CommitInfo}">
+                <StackPanel Orientation="Horizontal">
+                    <ItemsControl x:Name="Decorator" ItemsSource="{Binding Decorators}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:Decorator}">
+                                <Border x:Name="DecoratorBorder" Height="16" Margin="2,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="18"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0" Background="{StaticResource Brush.BG5}">
+                                            <Path x:Name="Icon" Width="8" Style="{StaticResource Style.Icon}" Data="{StaticResource Icon.Branch}"/>
+                                        </Border>
+                                        <TextBlock x:Name="Name" Grid.Column="1" Text="{Binding Name}" FontSize="11" Padding="4,0" Foreground="Black" VerticalAlignment="Center" TextWrapping="NoWrap"/>
+                                    </Grid>
+                                </Border>
+
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static models:DecoratorType.Tag}">
+                                        <Setter TargetName="DecoratorBorder" Property="Background" Value="#FF02C302"/>
+                                        <Setter TargetName="Icon" Property="Data" Value="{StaticResource Icon.Tag}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static models:DecoratorType.LocalBranchHead}">
+                                        <Setter TargetName="DecoratorBorder" Property="Background" Value="#FFFFB835"/>
+                                        <Setter TargetName="Icon" Property="Data" Value="{StaticResource Icon.Branch}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static models:DecoratorType.RemoteBranchHead}">
+                                        <Setter TargetName="DecoratorBorder" Property="Background" Value="#FFFFB835"/>
+                                        <Setter TargetName="Icon" Property="Data" Value="{StaticResource Icon.Remote}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Type}" Value="{x:Static models:DecoratorType.CurrentBranchHead}">
+                                        <Setter TargetName="DecoratorBorder" Property="Background" Value="#FFFFB835"/>
+                                        <Setter TargetName="Icon" Property="Data" Value="{StaticResource Icon.Check}"/>
+                                        <Setter TargetName="Icon" Property="Fill" Value="Orange"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding Message}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="dateTimeTemplate" DataType="{x:Type models:CommitInfo}">
+                <TextBlock Text="{Binding DateTime}" HorizontalAlignment="Right"/>
+            </DataTemplate>
+            <local:DecoratorsDataTemplateSelector x:Key="decoratorsDataTemplateSelector"
+                                                DateTimeTemplate="{StaticResource dateTimeTemplate}"
+                                                DecoratorsTemplate="{StaticResource decoratorsTemplate}" />
         </ResourceDictionary>
+
+
     </viewBase:BaseView.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -104,7 +171,9 @@
                             <TextBlock Grid.Row="0" Grid.Column="0" Margin="8,4" Text="{Binding MessageShort, Mode=OneWay}" />
                             <TextBlock Grid.Row="0" Grid.Column="1" Margin="0 4 8 0" Text="{Binding Count, Mode=OneWay}" HorizontalAlignment="Right"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Margin="8,4" Text="{Binding Author, Mode=OneWay}" />
-                            <TextBlock Grid.Row="1" Grid.Column="1" Margin="0 4 8 0" Text="{Binding DateTime, Mode=OneWay}" HorizontalAlignment="Right"/>
+                            <Grid Grid.Row="1" Grid.Column="1" Margin="0 4 8 0">
+                                <ContentControl Content="{Binding .}" ContentTemplateSelector="{StaticResource decoratorsDataTemplateSelector}" />
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

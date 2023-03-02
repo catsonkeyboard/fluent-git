@@ -90,7 +90,13 @@ namespace FluentGit.Services
                                     Author = p.Author.Name,
                                     Count = i,
                                     Commit = p,
-                                    ChangeInfos= changes
+                                    ChangeInfos= changes,
+                                    Decorators = new List<Decorator>
+                                    {
+                                        new Decorator { Type = DecoratorType.Tag, Name = "Tag1" },
+                                        new Decorator { Type = DecoratorType.CurrentBranchHead, Name = "branch1" },
+                                        new Decorator { Type = DecoratorType.RemoteBranchHead, Name = "remote-branch2" }
+                                    }
                                 };
                             }).ToList();
         }

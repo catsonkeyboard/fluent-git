@@ -9,6 +9,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Resources/Icons.xaml"/>
                 <!--主题样式-->
                 <ui:ThemesDictionary Theme="Dark" />
                 <!--控件-->

@@ -34,5 +34,7 @@ namespace FluentGit.Models
         private List<ChangeInfo> _changeInfos;
 
         public Commit Commit { get; set; }
+
+        public List<Decorator> Decorators { get; set; }
     }
 }
